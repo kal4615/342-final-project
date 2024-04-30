@@ -11,6 +11,11 @@ public class PitStop {
         this.current_cars = 0;
     }
 
+    public void enter(Car c){
+        
+    }
 
+    public void leave(Car c){
 
+    }
 }
