@@ -5,14 +5,16 @@ public class Car extends Thread{
     private double speed_decay;
     private int pit_time;
     private int position;
+    private RaceManager manager;
 
-    public Car (int ID, int speed, double decay, int pit){
+    public Car (int ID, int speed, double decay, int pit, RaceManager racemanager){
         this.ID = ID;
         this.max_speed = speed;
         this.current_speed = speed;
         this.speed_decay = decay;
         this.pit_time = pit;
         this.position = 0;
+        this.manager = racemanager;
     }
 
     @Override
@@ -22,15 +24,34 @@ public class Car extends Thread{
         // decay speed current_speed = (int)(current_speed * speed_decay);
     }
     
-    // default drive function that will decay the speed of the car as it drives
-    public void Drive (){
+    /**
+     * default drive function that will decay the speed of the car as it drives
+     * 
+     * @return if the car finishes the race
+     */
+    public boolean drive(){
+        position += current_speed;
+        if (manager.check_finish(position)){
+            return true;
+        };
         current_speed = (int)(current_speed * speed_decay);
-
+        return false;
     }
 
-    // formula to decide if car uses next stop or not
-    public static void Next_Pit_Stop(){
+    /**
+     * runs a formula to decide if the car makes a pitstop or not
+     * 
+     * @return returns the PitStop if the formula decides to make a pit stop
+     */
+    public PitStop next_pit_stop(){
+        PitStop next_pit = manager.next_pit(this.position);
+        if (next_pit == null){
+            return null;
+        }
 
+        int distance_to_pit = next_pit.get_location() - this.position;
+
+        return next_pit;
     }
 
 }

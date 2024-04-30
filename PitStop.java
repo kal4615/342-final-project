@@ -18,4 +18,8 @@ public class PitStop {
     public void leave(Car c){
 
     }
+
+    public int get_location(){
+        return this.location;
+    }
 }
