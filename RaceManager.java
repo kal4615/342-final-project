@@ -77,6 +77,8 @@ public class RaceManager{
      */
     public String[] run_race(){
         String[] standings = new String[racers.length];
+        int placement = 0; //the index for how many racers have completed the race
+        
         
         return standings;
     }
