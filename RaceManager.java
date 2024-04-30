@@ -15,4 +15,12 @@ public class RaceManager{
         }
         this.length = length;
     }
+
+    public double pit_formula(){
+        return 0.0;
+    }
+
+    public void drive_car(float distance){
+
+    }
 }
