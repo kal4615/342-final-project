@@ -46,10 +46,13 @@ public class Car extends Thread{
     public PitStop next_pit_stop(){
         PitStop next_pit = manager.next_pit(this.position);
         if (next_pit == null){
-            return null;
+            return null; //return null if there is no next pit stop
         }
 
         int distance_to_pit = next_pit.get_location() - this.position;
+        if (distance_to_pit > this.current_speed){
+            return null; //return null if the car cannot make it to the next pit stop this iteration
+        }
 
         return next_pit;
     }

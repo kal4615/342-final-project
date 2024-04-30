@@ -10,6 +10,7 @@ public class RaceManager{
     public RaceManager(int cars, int pits, int length){
         this.racers = new Car[cars];
         Random rand = new Random();
+        System.out.println("========== Cars ==========");
         for (int x = 0; x < cars; ++x){
             //decides random Max Speed for car
             int speed = (int)(MAX_CAR_SPEED * rand.nextDouble(.85, 1.15));
@@ -20,13 +21,23 @@ public class RaceManager{
             racers[x] = new Car(x, speed, decay, pit_time, this);
 
             //print details about the created car to the terminal
-            System.out.println("Car " + x + " | Max Speed: " + speed + " | Decay Rate: " + String.format("%.4f",decay) + " | Pit Time: " + pit_time);
+            System.out.printf("Car %d | Max Speed: %d | Decay Rate: %.4f | Pit Time: %d\n", x, speed, decay, pit_time);
         }
+
         this.pitstops = new PitStop[pits];
+        System.out.println("\n========== Pit Stops ==========");
         for (int y = 0; y < pits; ++y){
             int pit_location = (y+1)*length/(pits + 1);
             this.pitstops[y] = new PitStop(pit_location);    
+            //print a the pitstops as they are created
+            if(y < pits - 1){
+                System.out.printf("PitStop #%d Location: %d | ", y+1, pit_location);
+            }
+            else{
+                System.out.printf("PitStop #%d Location: %d \n", y+1, pit_location);
+            }
         }
+        
         this.length = length;
     }
 
@@ -36,8 +47,17 @@ public class RaceManager{
      * @param distance the distance into the race to check beyond for the next pit stop
      * @return the next pit stop, null if there is no pit stop before the end of the race
      */
-    public PitStop next_pit(int distance){
-        return null;
+    public PitStop next_pit(int location){
+        PitStop next_pit = null;
+        int shortest_distance = Integer.MAX_VALUE;
+        for (PitStop p : this.pitstops){
+            int distance = p.get_location() - location;
+            if(distance > 0 && distance < shortest_distance){
+                shortest_distance = distance;
+                next_pit = p;
+            }
+        }
+        return next_pit;
     }
 
     /** 
