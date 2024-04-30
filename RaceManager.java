@@ -17,10 +17,10 @@ public class RaceManager{
     }
 
     public double pit_formula(){
-        return 0.0;
+        return 0;
     }
 
-    public void drive_car(float distance){
+    public void drive_car(int distance){
 
     }
 }
