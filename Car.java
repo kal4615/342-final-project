@@ -14,4 +14,13 @@ public class Car {
         this.pit_time = pit;
         this.position = 0;
     }
+    
+    public static void Drive (){
+
+    }
+
+    public static void Next_Pit_Stop(){
+
+    }
+
 }
