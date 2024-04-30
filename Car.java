@@ -20,8 +20,11 @@ public class Car extends Thread{
     @Override
     public void run() {
         // TODO Auto-generated method stub
-        // tell race manager to move car distance of current speed
-        // decay speed current_speed = (int)(current_speed * speed_decay);
+        
+        //next_pit_stop
+        //enter pit stop
+        //if next_pit_stop is null then drive
+        //wait for notify from race manager
     }
     
     /**
@@ -50,6 +53,7 @@ public class Car extends Thread{
         }
 
         int distance_to_pit = next_pit.get_location() - this.position;
+
         if (distance_to_pit > this.current_speed){
             return null; //return null if the car cannot make it to the next pit stop this iteration
         }
