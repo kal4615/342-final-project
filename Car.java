@@ -39,7 +39,13 @@ public class Car extends Thread{
         if (manager.check_finish(position)){
             return true;
         };
+
+        System.out.printf("Car #%d (Speed: %d, Location: %d m) | ", this.ID, this.current_speed, this.position);
         current_speed = (int)(current_speed * speed_decay);
+
+        if(current_speed < max_speed * .1){ //the minimum speed a car can reach is 1/10th of its maximum speed
+            current_speed = (int)(max_speed * .1); 
+        }
         return false;
     }
 
@@ -59,6 +65,8 @@ public class Car extends Thread{
         if (distance_to_pit > this.current_speed){
             return null; //return null if the car cannot make it to the next pit stop this iteration
         }
+
+        //run pitstop formula, and return null if the decision is made not to stop
 
         return next_pit;
     }

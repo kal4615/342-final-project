@@ -21,7 +21,7 @@ public class RaceManager{
             racers[x] = new Car(x, speed, decay, pit_time, this);
 
             //print details about the created car to the terminal
-            System.out.printf("Car %d | Max Speed: %d | Decay Rate: %.4f%% | Pit Time: %d\n", x, speed, decay, pit_time);
+            System.out.printf("Car %d | Max Speed: %d | Decay Rate: %.4f%% | Pit Time: %d\n", x, speed, decay * 100, pit_time);
         }
 
         this.pitstops = new PitStop[pits];
@@ -81,28 +81,31 @@ public class RaceManager{
         int placement = 0; //the index for how many racers have completed the race
         int iterations = 0; //stores how many iterations have happened
         Boolean[] finished_racers = new Boolean[racers.length]; //stores the ids of cars that have completed the race
+        java.util.Arrays.fill(finished_racers, false);
 
-        System.out.println("========== Race Started ==========\n");
+        System.out.println("========== Race Started ==========");
+        System.out.printf("Race Distance %d m | PitStops: %d\n", this.length, this.pitstops.length);
         for (Car racer : racers){
             racer.run();
         }
         //runs until all racers have finished the race
         while (placement < racers.length){
+            System.out.printf("Iter. %d | ", iterations);
             ++iterations;
             //notify all cars so they make another decision
 
             //goes through the cars checking if a new car has finished the race
             for (Car racer : racers){
-                racer.drive();
-                if (check_finish(racer.get_location())){ //checks if the racer finished
+                if (racer.drive()){ //checks if the racer finished
                     if (finished_racers[racer.get_id()] == false){ //checks if the racer has already been recorded as finishing
+                        System.out.printf("Car #%d FINISHED THE RACE | ", racer.get_id());
                         standings[placement] = String.format("Car %d | %d Iterations", racer.get_id(), iterations); //adds the string to the standings array
                         ++placement;
                         finished_racers[racer.get_id()] = true; //sets the value in the finished array for the racer to true
                     }
                 }
             }
-
+            System.out.println();
         }
         
         
