@@ -19,13 +19,14 @@ public class Car extends Thread{
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
+        // FUNCTION NOT USED YET
         
-        //next_pit_stop
-        //if next_pit_stop exists
-            //enter pit stop
-        //if next_pit_stop is null
-            //drive
+        PitStop next_pit = next_pit_stop();
+        if (next_pit == null){
+            drive();
+        }
+        //else
+            //enter the pit or pit queue
         //wait for notify from race manager
     }
     
