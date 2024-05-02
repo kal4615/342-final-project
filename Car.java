@@ -22,8 +22,10 @@ public class Car extends Thread{
         // TODO Auto-generated method stub
         
         //next_pit_stop
-        //enter pit stop
-        //if next_pit_stop is null then drive
+        //if next_pit_stop exists
+            //enter pit stop
+        //if next_pit_stop is null
+            //drive
         //wait for notify from race manager
     }
     
@@ -59,6 +61,14 @@ public class Car extends Thread{
         }
 
         return next_pit;
+    }
+
+    public int get_location() {
+        return this.position;
+    }
+
+    public int get_id() {
+        return this.ID;
     }
 
 }

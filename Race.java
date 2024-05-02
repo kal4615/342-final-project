@@ -6,6 +6,7 @@ public class Race{
     public static void main(String[] args) {
         RaceManager manager = new RaceManager(NUMBER_RACERS, NUMBER_PITSTOPS, RACE_LENGTH);
         String[] results = manager.run_race();
+        System.out.println("========== Race Results ==========");
         for (String result : results){
             System.out.println(result);
         }
