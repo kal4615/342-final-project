@@ -94,8 +94,10 @@ public class RaceManager{
             ++iterations;
             //notify all cars so they make another decision
 
+
             //goes through the cars checking if a new car has finished the race
             for (Car racer : racers){
+                //REPLACE WITH if(check_finish(racer.get_location)) ONCE THREADING IS DONE
                 if (racer.drive()){ //checks if the racer finished
                     if (finished_racers[racer.get_id()] == false){ //checks if the racer has already been recorded as finishing
                         System.out.printf("Car #%d FINISHED THE RACE | ", racer.get_id());
