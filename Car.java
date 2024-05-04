@@ -33,12 +33,12 @@ public class Car extends Thread{
                 else{
                     synchronized(next_pit){
                         try {
-                            this.position = next_pit.get_location(); //has the car drive to the pit stop
-                        
+                            this.position = next_pit.get_location(); //has the car drive to the pit stop before entering
+
                             System.out.printf("Car #%d Enters Pit Stop(Location: %d m) | ", this.ID, this.position);
                             next_pit.enter(this);
                         } catch (InterruptedException e) {}
-                    
+
                         for(int i = 0; i < this.pit_time; ++i){
                             try {
                                 System.out.printf("Car #%d is in Pit Stop(Location: %d m) | ", this.ID, this.position);
