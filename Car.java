@@ -20,14 +20,29 @@ public class Car extends Thread{
     @Override
     public void run() {
         // FUNCTION NOT USED YET
+        synchronized(manager){
         
-        PitStop next_pit = next_pit_stop();
-        if (next_pit == null){
-            drive();
+            PitStop next_pit = next_pit_stop();
+            if (next_pit == null){
+                drive();
+            }
+            else{
+                try {
+                    next_pit.enter(this);
+                } catch (InterruptedException e) {}
+
+                for(int i = 0; i < this.pit_time - 1; ++i){
+                    try {
+                        this.manager.wait();
+                    } catch (InterruptedException e) {}
+                }
+            
+            }
+        
+        try {
+            this.manager.wait();
+        } catch (InterruptedException e) {}
         }
-        //else
-            //enter the pit or pit queue
-        //wait for notify from race manager
     }
     
     /**
