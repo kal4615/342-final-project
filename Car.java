@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Car extends Thread{
     private int ID;
     private int max_speed;
@@ -19,29 +21,41 @@ public class Car extends Thread{
 
     @Override
     public void run() {
-        // FUNCTION NOT USED YET
-        synchronized(manager){
+        // FUNCTION NOT USED YET}
+        boolean finished = false;
+        while(true){
+            synchronized(manager){
         
-            PitStop next_pit = next_pit_stop();
-            if (next_pit == null){
-                drive();
-            }
-            else{
-                try {
-                    next_pit.enter(this);
-                } catch (InterruptedException e) {}
-
-                for(int i = 0; i < this.pit_time - 1; ++i){
-                    try {
-                        this.manager.wait();
-                    } catch (InterruptedException e) {}
+                PitStop next_pit = next_pit_stop();
+                if (next_pit == null){
+                    finished = drive();
+                }
+                else{
+                    synchronized(next_pit){
+                        try {
+                            this.position = next_pit.get_location(); //has the car drive to the pit stop
+                        
+                            System.out.printf("Car #%d Enters Pit Stop(Location: %d m) | ", this.ID, this.position);
+                            next_pit.enter(this);
+                        } catch (InterruptedException e) {}
+                    
+                        for(int i = 0; i < this.pit_time; ++i){
+                            try {
+                                System.out.printf("Car #%d is in Pit Stop(Location: %d m) | ", this.ID, this.position);
+                                this.manager.wait();
+                            } catch (InterruptedException e) {}
+                        }
+                    }
                 }
             
+                try {
+                    this.manager.wait();
+                } catch (InterruptedException e) {}
             }
-        
-        try {
-            this.manager.wait();
-        } catch (InterruptedException e) {}
+
+            if (finished == true){
+                break;
+            }
         }
     }
     
@@ -83,6 +97,9 @@ public class Car extends Thread{
         }
 
         //run pitstop formula, and return null if the decision is made not to stop
+        if (10 > new Random().nextInt(11)){ //REPLACE WITH FORMULA
+            return null;
+        }
 
         return next_pit;
     }
