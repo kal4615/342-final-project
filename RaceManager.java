@@ -97,7 +97,7 @@ public class RaceManager{
             Thread.sleep(300); //sleep to help readability
             synchronized(this){
                 this.notifyAll();
-            }
+            
 
 
             //goes through the cars checking if a new car has finished the race
@@ -110,6 +110,7 @@ public class RaceManager{
                         finished_racers[racer.get_id()] = true; //sets the value in the finished array for the racer to true
                     }
                 }
+            }
             }
             System.out.println();
         }

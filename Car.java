@@ -52,6 +52,7 @@ public class Car extends Thread{
                             } catch (InterruptedException e) {}
                             next_pit.leave(this);
                         }
+                        System.out.printf("Car #%d leaves Pit Stop(Location: %d m) | ", this.ID, this.position);
                     }
                     
                 }
