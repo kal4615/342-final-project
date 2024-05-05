@@ -37,6 +37,7 @@ public class PitStop {
      * @param c the car
      */
     public void leave(Car c){
+        c.refuel();
         if(check_line() <= 0){
             current_cars -= 1;
         }

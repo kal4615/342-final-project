@@ -21,7 +21,6 @@ public class Car extends Thread{
 
     @Override
     public void run() {
-        // FUNCTION NOT USED YET}
         boolean finished = false;
         while(true){
             synchronized(manager){
@@ -34,8 +33,6 @@ public class Car extends Thread{
                     synchronized(next_pit){
                         try {
                             this.position = next_pit.get_location(); //has the car drive to the pit stop before entering
-
-                            System.out.printf("Car #%d Enters Pit Stop(Location: %d m) | ", this.ID, this.position);
                             next_pit.enter(this);
                         } catch (InterruptedException e) {}
 
@@ -45,6 +42,7 @@ public class Car extends Thread{
                                 this.manager.wait();
                             } catch (InterruptedException e) {}
                         }
+                        next_pit.leave(this);
                     }
                 }
             
@@ -102,6 +100,10 @@ public class Car extends Thread{
         }
 
         return next_pit;
+    }
+
+    public void refuel() {
+        this.current_speed = this.max_speed;
     }
 
     public int get_location() {
