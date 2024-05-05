@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Car extends Thread{
     private int ID;
     private int max_speed;
@@ -105,10 +107,23 @@ public class Car extends Thread{
             return null; //return null if the car cannot make it to the next pit stop this iteration
         }
 
+        double speed_perc = this.current_speed/this.max_speed;
+
         //run pitstop formula, and return null if the decision is made not to stop
-        //if ((this.max_speed / this.current_speed) < 2){ //REPLACE WITH BETTER FORMULA
-        //    return null;
-        //}
+        if (speed_perc >= 0.9){ // if current speed is 90% or higher of max speed dont pit
+           return null;
+        }
+        else if (speed_perc < 0.9 && speed_perc > 0.2){ // if current speed is between 20% and 90%
+            Random rand = new Random();
+            int rand_int = rand.nextInt(100);
+            int pit_chance = (int)(1 - speed_perc) * 100;  // percent chance of making a pit stop depending on how much fuel is left
+            if (rand_int <= pit_chance){  
+                return next_pit;
+            }
+            else{
+                return null;
+            }
+        }
 
         return next_pit;
     }
