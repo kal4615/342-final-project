@@ -18,16 +18,16 @@ public class PitStop {
      * @param time the number of iterations the car will stay
      * @throws InterruptedException 
      */
-    public void enter(Car c) throws InterruptedException{
-        if (check_line() == -1){
-            this.current_cars += 1;
-        }
-        else{
-            this.pit_queue.add(c);
-            synchronized(c){
-                c.wait();
+    public boolean enter(Car c){
+        synchronized(this){
+            if (check_line() == -1){
+                this.current_cars += 1;
+                return true;
             }
-            this.current_cars += 1;
+            else{
+                this.pit_queue.add(c);
+                return false;
+            }
         }
     }
 
@@ -37,16 +37,19 @@ public class PitStop {
      * @param c the car
      */
     public void leave(Car c){
-        c.refuel();
-        if(check_line() <= 0){
-            current_cars -= 1;
+        synchronized(this){
+            c.refuel();
+            if(check_line() <= 0){
+                current_cars -= 1;
+            }
+            else{
+                Car car = this.pit_queue.pop();
+                synchronized(car){
+                    car.notify();
+                }
+                current_cars -= 1;
+            }
         }
-        else{
-            Car c2 = this.pit_queue.pop();
-            c2.notify();
-            current_cars -= 1;
-        }
-
     }
 
     /**

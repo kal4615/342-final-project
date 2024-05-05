@@ -93,8 +93,8 @@ public class RaceManager{
         while (placement < racers.length){
             System.out.printf("Iter. %d | ", iterations);
             ++iterations;
-            //notify all cars so they make another decision
-            Thread.sleep(200);
+            
+            Thread.sleep(300); //sleep to help readability
             synchronized(this){
                 this.notifyAll();
             }
