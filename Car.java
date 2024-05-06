@@ -116,7 +116,7 @@ public class Car extends Thread{
         else if (speed_perc < 0.9 && speed_perc > 0.2){ // if current speed is between 20% and 90%
             Random rand = new Random();
             int rand_int = rand.nextInt(100);
-            int pit_chance = (int)(1 - speed_perc) * 100;  // percent chance of making a pit stop depending on how much fuel is left
+            int pit_chance = ((int)(1- speed_perc) * 100) ^ (pit_time / 2);  // percent chance of making a pit stop depending on how much fuel is left
             if (rand_int <= pit_chance){  
                 return next_pit;
             }
