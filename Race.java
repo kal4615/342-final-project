@@ -7,8 +7,10 @@ public class Race{
         RaceManager manager = new RaceManager(NUMBER_RACERS, NUMBER_PITSTOPS, RACE_LENGTH);
         String[] results = manager.run_race();
         System.out.println("\n========== Race Results ==========");
+        int place = 1;
         for (String result : results){
-            System.out.println(result);
+            System.out.println(place + " place: " + result);
+            place++;
         }
     }
 }
